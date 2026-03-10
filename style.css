@@ -94,13 +94,26 @@ h3.categoryDescription {
   width: 130px;
 }
 
-.summary {
+/*.summary {
   padding-left: 100px;
 }
+
+*/
+
+.content {
+  padding-left: 100px;
+}
+
+
 
 #headlines.archive .summary {
   padding-left: 130px;
 }
+
+
+
+
+
 
 .category {
   font-style: italic;

@@ -15,7 +15,6 @@ try {
 function initApplication()
 {
     $action = isset($_GET['action']) ? $_GET['action'] : "";
-
     switch ($action) {
         case 'archive':
           archive();
@@ -96,7 +95,7 @@ function homepage()
         $results['categories'][$category->id] = $category;
     } 
     
-    $results['pageTitle'] = "Простая CMS на PHP";
+    $results['pageTitle'] = "Простая CMS & на PHP";
     
 //    echo "<pre>";
 //    print_r($data);

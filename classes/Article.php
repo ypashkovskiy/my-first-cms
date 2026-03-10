@@ -36,6 +36,11 @@ class Article
     * @var string HTML содержание статьи
     */
     public $content = null;
+
+    /**
+    * @var string 50 символов содержымого статьи
+    */
+    public $content_50 = null;
     
     /**
      * Создаст объект статьи
@@ -69,6 +74,10 @@ class Article
       
       if (isset($data['content'])) {
           $this->content = $data['content'];  
+      }
+
+      if (isset($data['content_50'])) {
+          $this->content_50 = $data['content_50'];  
       }
     }
 
@@ -132,8 +141,8 @@ class Article
         $conn = new PDO(DB_DSN, DB_USERNAME, DB_PASSWORD);
         $fromPart = "FROM articles";
         $categoryClause = $categoryId ? "WHERE categoryId = :categoryId" : "";
-        $sql = "SELECT *, UNIX_TIMESTAMP(publicationDate) 
-                AS publicationDate
+        $sql = "SELECT *, CONCAT(SUBSTRING(content, 1, 50), '...') AS content_50, 
+                UNIX_TIMESTAMP(publicationDate) AS publicationDate
                 $fromPart $categoryClause
                 ORDER BY  $order  LIMIT :numRows";
         
@@ -158,10 +167,10 @@ class Article
 
         // Получаем общее количество статей, которые соответствуют критерию
         $sql = "SELECT COUNT(*) AS totalRows $fromPart $categoryClause";
-	$st = $conn->prepare($sql);
-	if ($categoryId) 
+	    $st = $conn->prepare($sql);
+	    if ($categoryId) 
             $st->bindValue( ":categoryId", $categoryId, PDO::PARAM_INT);
-	$st->execute(); // выполняем запрос к базе данных                    
+	    $st->execute(); // выполняем запрос к базе данных                    
         $totalRows = $st->fetch();
         $conn = null;
         

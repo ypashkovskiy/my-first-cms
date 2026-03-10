@@ -2,11 +2,11 @@
 <?php include "templates/include/header.php" ?>
     <ul id="headlines">
     <?php foreach ($results['articles'] as $article) { ?>
-        <li class='<?php echo $article->id?>'>
+         <li class='<?php echo $article->id?>'> 
             <h2>
                 <span class="pubDate">
                     <?php echo date('j F', $article->publicationDate)?>
-                </span>
+                </span> 
                 
                 <a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>">
                     <?php echo htmlspecialchars( $article->title )?>
@@ -25,9 +25,19 @@
                         <?php echo "Без категории"?>
                     </span>
                 <?php } ?>
+
+                 
+
             </h2>
-            <p class="summary"><?php echo htmlspecialchars($article->summary)?></p>
-            <img id="loader-identity" src="JS/ajax-loader.gif" alt="gif">
+            
+            
+            <p class="content"><?php echo htmlspecialchars($article->content_50)?></p>
+
+            <!--Второй способ -->
+
+            <!-- <p class="content"><?php echo htmlspecialchars(mb_substr($article->content, 0, 50) . "...")?></p>-->
+
+           <img id="loader-identity" src="JS/ajax-loader.gif" alt="gif">
             
             <ul class="ajax-load">
                 <li><a href=".?action=viewArticle&amp;articleId=<?php echo $article->id?>" class="ajaxArticleBodyByPost" data-contentId="<?php echo $article->id?>">Показать продолжение (POST)</a></li>
