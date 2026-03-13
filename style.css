@@ -8,6 +8,22 @@ body {
   line-height: 1.5em;
 }
 
+
+ 
+/* Стилизация  чекбокса */
+.checkbox-box {
+ 
+
+  width: 20px;
+  height: 20px;
+  background-color: #eee;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transform: translateY(5px);
+  transition: 0.3s;
+}
+
+
 #container {
   width: 960px;
   background: #fff;
@@ -94,11 +110,6 @@ h3.categoryDescription {
   width: 130px;
 }
 
-/*.summary {
-  padding-left: 100px;
-}
-
-*/
 
 .content {
   padding-left: 100px;
@@ -196,6 +207,8 @@ label {
 
 /* Поля */
 
+
+
 input, select, textarea {
   display: block;
   margin: 0;
@@ -213,7 +226,10 @@ input, textarea, .date {
 
 input {
   font-size: .9em;
+
 }
+
+
 
 select {
   padding: 0;
@@ -287,6 +303,13 @@ input[type="submit"]:active {
   box-shadow: 0 0 .5em rgba(0, 0, 0, .8) inset;
 }
 
+
+
+input [type="checkbox"]{
+  display: flex;
+  align-items: center; /* Вертикальное выравнивание */
+  justify-content: flex-start;
+}
 
 /* Таблицы */
 
