@@ -66,4 +66,6 @@
 
           <p><a href="admin.php?action=newArticle">Add a New Article</a></p>
 
+          <p><a href="admin.php?action=listUsers">Users</a></p>
+
 <?php include "templates/include/footer.php" ?>              

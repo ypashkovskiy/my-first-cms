@@ -59,11 +59,12 @@
                           
 
             </ul>
-
+            
             <div class="buttons">
               <input type="submit" name="saveChanges" value="Save Changes" />
               <input type="submit" formnovalidate name="cancel" value="Cancel" />
             </div>
+             
 
         </form>
 
