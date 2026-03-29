@@ -140,6 +140,22 @@ h3.categoryDescription {
   text-decoration: underline;
 }
 
+.subcategory {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 60%;
+  color: #999;
+  display: block;
+  line-height: 2em;
+}
+
+.subcategory a {
+  color: #999;
+  text-decoration: underline;
+}
+
+
+
 .showContent {
     font-size : 14px;
     float : right;

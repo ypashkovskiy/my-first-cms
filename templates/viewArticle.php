@@ -12,6 +12,13 @@
         </a>
     <?php } ?>
         
+    <?php if (( $results['category'] )&&($results['subcategory'])) { ?>
+        in 
+        <a href="./?action=archive&amp; categoryId=<?php echo $results['category']->id?>&amp; subcategoryId=<?php echo $results['subcategory']->id?>">
+            <?php echo htmlspecialchars($results['subcategory']->name) ?>
+        </a>
+    <?php } ?>
+
     </p>
 
     <p><a href="./">Вернуться на главную страницу</a></p>

@@ -6,6 +6,11 @@
     <h3 class="categoryDescription"><?php echo htmlspecialchars( $results['category']->description ) ?></h3>
     <?php } ?>
 
+    <?php if ( $results['subcategory'] ) { ?>
+      <h2 class="categoryDescription"><?php echo htmlspecialchars( $results['subcategory']->name ) ?></h2>  
+     <h3 class="categoryDescription"><?php echo htmlspecialchars( $results['subcategory']->description ) ?></h3>
+    <?php } ?>
+
     <ul id="headlines" class="archive">
 
     <?php foreach ( $results['articles'] as $article ) { ?>
@@ -26,6 +31,16 @@
                             <?php echo htmlspecialchars( $results['categories'][$article->categoryId]->name ) ?>
                         </a>
                     </span>
+
+                    <?php if (!$results['category'] &&$article->subcategoryId ) { ?>
+                    <span class="subcategory">
+                        in 
+                        <a href=".?action=archive&amp;categoryId=<?php echo $article->categoryId?>&amp;subcategoryId=<?php echo $article->subcategoryId?>">
+                            <?php echo htmlspecialchars( $results['subcategories'][$article->subcategoryId]->name ) ?>
+                        </a>
+                    </span>
+                    <?php } ?>   
+
                     <?php } ?>          
                 </h2>
               <p class="summary"><?php echo htmlspecialchars( $article->summary )?></p>

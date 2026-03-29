@@ -33,19 +33,80 @@
 
               <li>
                 <label for="categoryId">Article Category</label>
-                <select name="categoryId">
-                  <option value="0" <?php echo !$results['article']->categoryId ? " selected" : ""?>>(none)</option>
+               
+               
+               
+                <select name="categoryId" id="categoryId" >
+                 <option value="0" <?php echo !$results['article']->categoryId ? " selected" : ""?>>Выберите категорию</option>
                 <?php foreach ( $results['categories'] as $category ) { ?>
                   <option value="<?php echo $category->id?>"<?php echo ( $category->id == $results['article']->categoryId ) ? " selected" : ""?>><?php echo htmlspecialchars( $category->name )?></option>
+ 
+
                 <?php } ?>
                 </select>
+         
+
               </li>
+
+              
+            
+
+              <label for="subcategoryId">SubCategory</label>
+              <select name="subcategoryId" id="subcategoryId">
+               <option value="0" <?php echo !$results['article']->subcategoryId ? " selected" : ""?>>Выберите подкатегорию</option>
+              <?php foreach ( $results['subcategories'] as $subcategory ) { ?>
+           
+                 <?php if ( $subcategory->categories_id ==  $results['article']->categoryId){ ?>
+                  <option value="<?php echo $subcategory->id?>"<?php echo ( $subcategory->id == $results['article']->subcategoryId) ? " selected" : ""?> 
+                  ><?php echo htmlspecialchars( $subcategory->name )?></option>
+                <?php } ?>
+                <?php } ?>
+               </select>
+
+
+            <script>
+// 1. Объявляем данные ОДИН РАЗ при загрузке страницы
+              const subcategories = <?php echo json_encode($results['subcategories']); ?>;
+              const article = <?php echo json_encode($results['article']); ?>;
+
+              document.addEventListener('DOMContentLoaded', function() {
+               const categorySelect = document.getElementById('categoryId');
+               const subSelect = document.getElementById('subcategoryId');
+
+              if (!categorySelect || !subSelect) return;
+
+              categorySelect.addEventListener('change', function() {
+                  const selectedCategoryId = this.value;
+        
+        // Очищаем старые опции
+              subSelect.innerHTML = '<option value="0">Выберите подкатегорию</option>';
+
+              if (selectedCategoryId) {
+            // Фильтруем и добавляем новые опции
+              subcategories.forEach(sub => {
+                // Приводим к строке для надежного сравнения
+                if (String(sub.categories_id) === String(selectedCategoryId))   {
+                    const option = new Option(sub.name, sub.id); // (текст, значение)
+                    subSelect.add(option);
+                    }
+                   });
+                 }
+                 });
+                });
+              </script>
+
+            
+
+
+       
+
 
               <li>
                 <label for="publicationDate">Publication Date</label>
                 <input type="date" name="publicationDate" id="publicationDate" placeholder="YYYY-MM-DD" required maxlength="10" 
                    value="<?php echo $results['article']->publicationDate ? date( "Y-m-d", $results['article']->publicationDate ) : "" ?>" />
               </li>
+
 
                
 
@@ -63,9 +124,11 @@
             <div class="buttons">
               <input type="submit" name="saveChanges" value="Save Changes" />
               <input type="submit" formnovalidate name="cancel" value="Cancel" />
+
             </div>
              
 
+            
         </form>
 
     <?php if ($results['article']->id) { ?>

@@ -34,24 +34,76 @@ function archive()
     $categoryId = ( isset( $_GET['categoryId'] ) && $_GET['categoryId'] ) ? (int)$_GET['categoryId'] : null;
     
     $results['category'] = Category::getById( $categoryId );
+
+    $subcategoryId = ( isset( $_GET['subcategoryId'] ) && $_GET['subcategoryId'] ) ? (int)$_GET['subcategoryId'] : null;
+    $results['subcategory'] = SubCategory::getById( $subcategoryId );
     
-    $data = Article::getList( 100000, $results['category'] ? $results['category']->id : null );
+    $data = Article::getList( 100000, $results['category'] ? $results['category']->id : null, 
+                                      $results['subcategory'] ? $results['subcategory']->id : null);
     
     $results['articles'] = $data['results'];
     $results['totalRows'] = $data['totalRows'];
-    
+  
+  
     $data = Category::getList();
     $results['categories'] = array();
     
     foreach ( $data['results'] as $category ) {
         $results['categories'][$category->id] = $category;
     }
+
+    $data2 = SubCategory::getList();
+    $results['subcategories'] = array();
+    
+    foreach ( $data2['results'] as $subcategory ) {
+        $results['subcategories'][$subcategory->id] = $subcategory;
+    }
+    
     
     $results['pageHeading'] = $results['category'] ?  $results['category']->name : "Article Archive";
     $results['pageTitle'] = $results['pageHeading'] . " | Widget News";
     
     require( TEMPLATE_PATH . "/archive.php" );
 }
+
+function archivesubcategory() 
+{
+    $results = [];
+    
+    $categoryId = ( isset( $_GET['categoryId'] ) && $_GET['categoryId'] ) ? (int)$_GET['categoryId'] : null;
+    
+    $results['category'] = Category::getById( $categoryId );
+
+    $subcategoryId = ( isset( $_GET['subcategoryId'] ) && $_GET['subcategoryId'] ) ? (int)$_GET['subcategoryId'] : null;
+    $results['subcategory'] = SubCategory::getById( $subcategoryId );
+    
+    $data = Article::getList( 100000, $results['category'] ? $results['category']->id : null, 
+                                      $results['subcategory'] ? $results['subcategory']->id : null);
+    
+    $results['articles'] = $data['results'];
+    $results['totalRows'] = $data['totalRows'];
+    
+   /* $data = Category::getList();
+    $results['categories'] = array();
+    
+    foreach ( $data['results'] as $category ) {
+        $results['categories'][$category->id] = $category;
+    }
+
+    $data2 = SubCategory::getList();
+    $results['subcategories'] = array();
+    
+    foreach ( $data2['results'] as $subcategory ) {
+        $results['subcategories'][$subcategory->id] = $subcategory;
+    }*/
+
+    
+    $results['pageHeading'] = $results['category'] ?  $results['category']->name : "Article Archive";
+    $results['pageTitle'] = $results['pageHeading'] . " | Widget News";
+    
+    require( TEMPLATE_PATH . "/archive.php" );
+}
+
 
 /**
  * Загрузка страницы с конкретной статьёй
@@ -74,6 +126,8 @@ function viewArticle()
     }
     
     $results['category'] = Category::getById($results['article']->categoryId);
+    $results['subcategory'] = SubCategory::getById($results['article']->subcategoryId);
+
     $results['pageTitle'] = $results['article']->title . " | Простая CMS";
     
     require(TEMPLATE_PATH . "/viewArticle.php");
@@ -93,6 +147,12 @@ function homepage()
     $results['categories'] = array();
     foreach ( $data['results'] as $category ) { 
         $results['categories'][$category->id] = $category;
+    } 
+
+    $data2 = SubCategory::getList();
+    $results['subcategories'] = array();
+    foreach ( $data2['results'] as $subcategory ) { 
+        $results['subcategories'][$subcategory->id] = $subcategory;
     } 
     
     $results['pageTitle'] = "Простая CMS & на PHP";

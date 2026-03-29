@@ -26,6 +26,16 @@
                     </span>
                 <?php } ?>
 
+
+                 <?php if (isset($article->subcategoryId)) { ?>
+                    <span class="subcategory">
+                        in 
+                        <a href=".?action=archive&amp; categoryId=<?php echo $article->categoryId?>&amp;subcategoryId=<?php echo $article->subcategoryId?>">
+                            <?php echo htmlspecialchars($results['subcategories'][$article->subcategoryId]->name )?>
+                        </a>
+                    </span>
+                 <?php } ?>
+
                  
 
             </h2>
