@@ -47,9 +47,7 @@
          
 
               </li>
-
-              
-            
+         
 
               <label for="subcategoryId">SubCategory</label>
               <select name="subcategoryId" id="subcategoryId">
@@ -62,6 +60,32 @@
                 <?php } ?>
                 <?php } ?>
                </select>
+
+            <label for="articleuserId">Users</label>
+            <select name="articleuser[]" multiple="" size="2">
+              <!-- <option value="0">Выберите автора</option>-->
+              
+               <?php foreach ($results['users'] as $user): ?>
+               <?php 
+                  $isSelected = false;
+                  foreach ($results['articleuser'] as $articleuser) {
+        // Исправлено: $articleuser->user_id вместо $articleuser->$user_id
+                  if ($articleuser->article_id == $results['article']->id && $user->userId == $articleuser->user_id) {
+                     $isSelected = true;
+                     break; 
+                     }
+                    }
+                    ?>
+                    <option value="<?= $user->userId ?>" <?= $isSelected ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($user->userName) ?>
+                   </option>
+                   <?php endforeach; ?>
+
+
+            </select>
+
+
+
 
 
             <script>

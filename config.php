@@ -30,6 +30,7 @@ try {
     
     // Подключаем Классы моделей (классы, отвечающие за работу с сущностями базы данных)
     require(CLASS_PATH . "/Article.php");
+    require(CLASS_PATH . "/ArticleUser.php");
     require(CLASS_PATH . "/Category.php");   
     require(CLASS_PATH . "/SubCategory.php");
     require(CLASS_PATH . "/Users.php");    

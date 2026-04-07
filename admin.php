@@ -202,6 +202,50 @@ function editArticle() {
 
         $article->storeFormValues( $_POST );
         $article->update();
+
+        
+        
+        $matrix = [];
+        
+        if (isset($_POST['articleuser']) && is_array($_POST['articleuser'])) {
+        foreach ($_POST['articleuser'] as $key => $value) {
+
+             $matrix[$key]['article_id'] = (int)$_POST['articleId'];
+             $matrix[$key]['user_id'] = $value;
+             
+
+              if ( is_null($articleuser = ArticleUser::getById( $matrix[$key]['article_id'], $matrix[$key]['user_id'] ))) {
+                                           
+                $articleuser = new ArticleUser();  
+                $articleuser->storeFormValues($matrix[$key]);
+                $articleuser->insert();
+              
+        }
+            
+           }
+        }
+       
+        $articleuserdelet = ArticleUser::getById( (int)$_POST['articleId']); 
+        $array1 = (array)$articleuserdelet['results'];
+        $array2 =$matrix; 
+      
+        // 1. Превращаем вложенные массивы в JSON-строки
+           $serialized1 = array_map('json_encode', $array1);
+           $serialized2 = array_map('json_encode', $array2);
+
+        // 2. Находим элементы, которых НЕТ в другом массиве (удаляем общие)
+          $diff1 = array_diff($serialized1, $serialized2);
+         // 3. Декодируем обратно в массивы
+          $result1 = array_map('json_decode', $diff1, array_fill(0, count($diff1), true));
+         
+          foreach ( $result1 as $key => $value) {
+              $articleuser = new ArticleUser();  
+              $articleuser->storeFormValues($value);
+              $articleuser->delete();
+
+          }
+
+
         header( "Location: admin.php?status=changesSaved" );
 
     } elseif ( isset( $_POST['cancel'] ) ) {
@@ -217,6 +261,12 @@ function editArticle() {
          
         $data2 = SubCategory::getList();
         $results['subcategories'] = $data2['results'];
+
+        $data = Users::getList();
+        $results['users'] = $data['results'];
+
+        $data = ArticleUser::getList();
+        $results['articleuser'] = $data['results'];
 
 
         require(TEMPLATE_PATH . "/admin/editArticle.php");
@@ -296,6 +346,20 @@ function listArticles() {
     foreach ($data2['results'] as $subcategory) { 
         $results['subcategories'][$subcategory->id] = $subcategory;
     }
+
+    $data = ArticleUser::getList();
+    $results['articleuser'] = array();
+    foreach ($data['results'] as $articleuser) { 
+        $results['articleuser'][] = $articleuser;
+    }
+
+
+    $data = Users::getList();
+    $results['user'] = array();
+    foreach ($data['results'] as $user) { 
+        $results['user'][$user->userId] = $user;
+    }
+
     
     $results['pageTitle'] = "Все статьи";
 

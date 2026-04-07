@@ -43,6 +43,22 @@
             
             <p class="content"><?php echo htmlspecialchars($article->content_50)?></p>
 
+            
+           <span class="content">
+                    Автор:
+                    <?php 
+
+                     $users = []; // Используем массив для удобства
+                     foreach ($results['articleuser'] as $articleuser) {
+                       if ($articleuser->article_id == $article->id) {
+                      // Добавляем имя в массив
+                      $users[] = $results['user'][$articleuser->user_id]->userName;
+                      }
+                      }
+                       // Объединяем через запятую и выводим
+                     echo implode(", ", $users);
+                       ?>
+            </span>
             <!--Второй способ -->
 
             <!-- <p class="content"><?php echo htmlspecialchars(mb_substr($article->content, 0, 50) . "...")?></p>-->

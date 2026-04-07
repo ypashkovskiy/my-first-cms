@@ -18,6 +18,7 @@
               <th>Article</th>
               <th>Category</th>
               <th>SubCategory</th>
+               <th>Users</th>
               <th>Active</th>
             </tr>
 
@@ -55,6 +56,18 @@
                 }?>
               </td>
 
+
+               <td>
+              <?php 
+              $users ="";
+              foreach ($results['articleuser'] as $articleuser) { 
+              if ($articleuser->article_id == $article->id){
+                 $users  .= $results['user'][$articleuser->user_id]->userName . ", ";
+              } 
+               }
+               echo rtrim($users, ", ");
+                 ?>
+              </td>
 
               <td> 
                 <?php 

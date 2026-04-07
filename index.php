@@ -58,6 +58,20 @@ function archive()
     foreach ( $data2['results'] as $subcategory ) {
         $results['subcategories'][$subcategory->id] = $subcategory;
     }
+
+
+    $data = ArticleUser::getList();
+    $results['articleuser'] = array();
+    foreach ($data['results'] as $articleuser) { 
+        $results['articleuser'][] =$articleuser;
+    }
+
+
+    $data = Users::getList();
+    $results['user'] = array();
+    foreach ($data['results'] as $user) { 
+        $results['user'][$user->userId] = $user;
+    }
     
     
     $results['pageHeading'] = $results['category'] ?  $results['category']->name : "Article Archive";
@@ -83,21 +97,7 @@ function archivesubcategory()
     $results['articles'] = $data['results'];
     $results['totalRows'] = $data['totalRows'];
     
-   /* $data = Category::getList();
-    $results['categories'] = array();
-    
-    foreach ( $data['results'] as $category ) {
-        $results['categories'][$category->id] = $category;
-    }
-
-    $data2 = SubCategory::getList();
-    $results['subcategories'] = array();
-    
-    foreach ( $data2['results'] as $subcategory ) {
-        $results['subcategories'][$subcategory->id] = $subcategory;
-    }*/
-
-    
+      
     $results['pageHeading'] = $results['category'] ?  $results['category']->name : "Article Archive";
     $results['pageTitle'] = $results['pageHeading'] . " | Widget News";
     
@@ -128,6 +128,21 @@ function viewArticle()
     $results['category'] = Category::getById($results['article']->categoryId);
     $results['subcategory'] = SubCategory::getById($results['article']->subcategoryId);
 
+     $data = ArticleUser::getList();
+    $results['articleuser'] = array();
+    foreach ($data['results'] as $articleuser) { 
+        if ($articleuser->article_id == $articleId ){
+        $results['articleuser'][] =$articleuser;
+    }
+    }
+
+
+    $data = Users::getList();
+    $results['user'] = array();
+    foreach ($data['results'] as $user) { 
+        $results['user'][$user->userId] = $user;
+    }
+
     $results['pageTitle'] = $results['article']->title . " | Простая CMS";
     
     require(TEMPLATE_PATH . "/viewArticle.php");
@@ -154,6 +169,21 @@ function homepage()
     foreach ( $data2['results'] as $subcategory ) { 
         $results['subcategories'][$subcategory->id] = $subcategory;
     } 
+
+
+   $data = ArticleUser::getList();
+   $results['articleuser'] = array();
+
+   foreach ($data['results'] as $articleuser) {
+    $results['articleuser'][] =$articleuser;
+  }
+
+
+    $data = Users::getList();
+    $results['user'] = array();
+    foreach ($data['results'] as $user) { 
+        $results['user'][$user->userId] = $user;
+    }
     
     $results['pageTitle'] = "Простая CMS & на PHP";
     

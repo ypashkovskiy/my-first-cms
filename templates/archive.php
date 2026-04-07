@@ -40,10 +40,29 @@
                         </a>
                     </span>
                     <?php } ?>   
+                    <?php } ?>   
+                    
+                   
+                    
 
-                    <?php } ?>          
                 </h2>
               <p class="summary"><?php echo htmlspecialchars( $article->summary )?></p>
+
+               <span class="summary">
+                    Автор:
+                    <?php 
+
+                     $users = []; // Используем массив для удобства
+                     foreach ($results['articleuser'] as $articleuser) {
+                       if ($articleuser->article_id == $article->id) {
+                      // Добавляем имя в массив
+                      $users[] = $results['user'][$articleuser->user_id]->userName;
+                      }
+                      }
+                       // Объединяем через запятую и выводим
+                     echo implode(", ", $users);
+                       ?>
+                    </span>
             </li>
 
     <?php } ?>

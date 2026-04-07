@@ -19,6 +19,20 @@
         </a>
     <?php } ?>
 
+     <span class="content">
+                    Автор:
+                    <?php 
+
+                     $users = []; // Используем массив для удобства
+                     foreach ($results['articleuser'] as $articleuser) {
+                       // Добавляем имя в массив
+                      $users[] = $results['user'][$articleuser->user_id]->userName;
+                      }
+                       // Объединяем через запятую и выводим
+                     echo implode(", ", $users);
+                       ?>
+            </span>
+
     </p>
 
     <p><a href="./">Вернуться на главную страницу</a></p>
