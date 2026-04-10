@@ -1,7 +1,7 @@
 // выводим идентификатор
     function showLoaderIdentity() 
-    {
-        $("#loader-identity").show("slow");
+    {$("#loader-identity").show("slow");
+        
     }
 
     // скрываем идентификатор
